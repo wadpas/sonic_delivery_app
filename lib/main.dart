@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Home Page'),
       ),
       body: const Center(
-        child: Text('Meals'),
+        child: Text('Meals categories'),
       ),
     );
   }

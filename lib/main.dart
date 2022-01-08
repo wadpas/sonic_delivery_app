@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'categories_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -33,9 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: const Center(
-        child: Text('Meals categories'),
-      ),
+      body: const CategoriesScreen(),
     );
   }
 }

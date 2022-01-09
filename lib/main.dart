@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'categories_screen.dart';
+import 'screens/categories_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,8 +13,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sonic Delivery',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData(fontFamily: 'Lato').copyWith(
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: Colors.blue,
+              secondary: Colors.red,
+            ),
       ),
       home: const MyHomePage(),
     );
@@ -31,11 +34,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-      ),
-      body: const CategoriesScreen(),
-    );
+    return const CategoriesScreen();
   }
 }

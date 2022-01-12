@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/category_screen.dart';
+
 class CategotyItem extends StatelessWidget {
   const CategotyItem({Key? key, this.title}) : super(key: key);
   final String? title;
@@ -7,9 +9,10 @@ class CategotyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => print('object'),
+      onTap: () => Navigator.pushNamed(context, CategoryScreen.routeName,
+          arguments: title),
       splashColor: Theme.of(context).colorScheme.primary,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(4),
       child: Column(
         children: [
           const Expanded(

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1067652854602",
+    "project_id": "sonic-delivery-app",
+    "storage_bucket": "sonic-delivery-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067652854602:android:1564f0b5c4f5f8640e87b3",
+        "android_client_info": {
+          "package_name": "com.example.sonic_delivery_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067652854602-1j6cq6bn7644u1cd3baak620ue160e0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOGF2DxJEV9CHW1Y6BxHlK0yyh4v7hOOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067652854602-1j6cq6bn7644u1cd3baak620ue160e0a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

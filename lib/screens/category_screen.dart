@@ -6,13 +6,16 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String categoryTitle =
-        ModalRoute.of(context)!.settings.arguments as String;
+    final Map categoryData = ModalRoute.of(context)!.settings.arguments as Map;
 
     return Scaffold(
-      appBar: AppBar(title: Text(categoryTitle)),
+      appBar: AppBar(
+        title: Text(categoryData['title']),
+      ),
       body: Scaffold(
-        body: Center(child: Text(categoryTitle)),
+        body: Center(
+          child: Text(categoryData['title']),
+        ),
       ),
     );
   }

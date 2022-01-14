@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
               secondary: Colors.red,
             ),
       ),
-      initialRoute: '/',
       routes: {
         '/': (context) => const CategoriesScreen(),
         CategoryScreen.routeName: (context) => const CategoryScreen(),

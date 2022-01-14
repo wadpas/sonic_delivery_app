@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../screens/category_screen.dart';
 
-class CategotyItem extends StatelessWidget {
-  const CategotyItem({Key? key, this.title}) : super(key: key);
+class CategoriesItem extends StatelessWidget {
+  const CategoriesItem({Key? key, this.id, this.title}) : super(key: key);
+  final String? id;
   final String? title;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.pushNamed(context, CategoryScreen.routeName,
-          arguments: title),
+          arguments: {'id': id, 'title': title}),
       splashColor: Theme.of(context).colorScheme.primary,
       borderRadius: BorderRadius.circular(4),
       child: Column(

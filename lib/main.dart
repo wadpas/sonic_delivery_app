@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'screens/categories_screen.dart';
-import 'screens/category_screen.dart';
+import 'screens/partners_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const CategoriesScreen(),
-        CategoryScreen.routeName: (context) => const CategoryScreen(),
+        PartnersScreen.routeName: (context) => const PartnersScreen(),
       },
     );
   }

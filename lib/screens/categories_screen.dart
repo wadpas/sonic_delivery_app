@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/future_grid_view.dart';
+import 'partners_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   static const routeName = '/';
@@ -13,7 +14,8 @@ class CategoriesScreen extends StatelessWidget {
         title: const Text('Categories Screen'),
       ),
       body: const FutureGridView(
-        reference: '/categories',
+        routeName: PartnersScreen.routeName,
+        dbReference: '/categories',
       ),
     );
   }

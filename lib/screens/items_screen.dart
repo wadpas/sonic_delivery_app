@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/future_grid_view.dart';
-import 'items_screen.dart';
 
-class PartnersScreen extends StatelessWidget {
-  static const routeName = '/partners';
-  const PartnersScreen({Key? key}) : super(key: key);
+class ItemsScreen extends StatelessWidget {
+  static const routeName = '/items';
+  const ItemsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class PartnersScreen extends StatelessWidget {
         title: Text(routeData['title']),
       ),
       body: FutureGridView(
-        routeName: ItemsScreen.routeName,
+        routeName: routeName,
         dbReference: routeData['dbReference'],
       ),
     );

@@ -23,6 +23,11 @@ class MyApp extends StatelessWidget {
               primary: Colors.blue,
               secondary: Colors.red,
             ),
+        appBarTheme: const AppBarTheme().copyWith(
+          elevation: 1,
+          foregroundColor: Colors.black,
+          color: Colors.grey.shade50,
+        ),
       ),
       routes: {
         '/': (context) => const CategoriesScreen(),

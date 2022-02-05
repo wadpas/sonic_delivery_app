@@ -9,6 +9,7 @@ class FutureGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance.collection(dbReference!).get(),
         builder: (context, snapshot) {
@@ -16,12 +17,11 @@ class FutureGridView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           return GridView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(4),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 3 / 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
+              maxCrossAxisExtent: 767,
+              childAspectRatio: 7 / 2,
+              crossAxisSpacing: 8,
             ),
             children: snapshot.data!.docs
                 .map((e) => InkWell(
@@ -38,21 +38,28 @@ class FutureGridView extends StatelessWidget {
                       },
                       splashColor: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(4),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(4),
-                              child: Image(
-                                image: NetworkImage(e['image']),
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
-                              ),
-                            ),
+                      child: Card(
+                        elevation: 0.5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(screenHeight * 0.1),
+                          bottomLeft: Radius.circular(screenHeight * 0.1),
+                        )),
+                        child: Row(children: [
+                          const SizedBox(width: 4),
+                          Image(
+                            image: NetworkImage(e['imageUrl']),
                           ),
-                          Text(e['title']),
-                        ],
+                          const SizedBox(width: 4),
+                          Text(
+                            e['title'],
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ]),
                       ),
                     ))
                 .toList(),

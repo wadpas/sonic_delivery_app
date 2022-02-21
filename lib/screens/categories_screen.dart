@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'partners_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  static const routeName = '/';
   const CategoriesScreen({Key? key}) : super(key: key);
 
   @override

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'items_screen.dart';
-
 class PartnersScreen extends StatelessWidget {
   static const routeName = '/partners';
   const PartnersScreen({Key? key}) : super(key: key);
@@ -31,7 +29,7 @@ class PartnersScreen extends StatelessWidget {
                   crossAxisSpacing: 8,
                 ),
                 children: snapshot.data!.docs
-                    .map((e) => InkWell(
+                    .map((partner) => InkWell(
                           onTap: () {
                             Navigator.pushNamed(
                               context,
@@ -54,10 +52,17 @@ class PartnersScreen extends StatelessWidget {
                             )),
                             child: Row(children: [
                               const SizedBox(width: 4),
+
                               Image(
-                                image: NetworkImage(e['imageUrl']),
+                                image: NetworkImage(partner['imageUrl']),
                               ),
                               const SizedBox(width: 4),
+                              // Text(partner['about'].toString()),
+                              Column(
+                                  children: partner['about']
+                                      .map<Widget>((e) => Text(e + ' '))
+                                      .toList())
+
                               // Text(
                               //   e['title'],
                               //   style: const TextStyle(

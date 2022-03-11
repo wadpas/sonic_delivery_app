@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'screens/partners_screen.dart';
-import 'screens/items_screen.dart';
+import 'screens/dishes_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const PartnersScreen(),
-        ItemsScreen.routeName: (context) => const ItemsScreen()
+        DishesScreen.routeName: (context) => const DishesScreen()
       },
     );
   }

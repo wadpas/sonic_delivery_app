@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FutureGridView extends StatelessWidget {
-  const FutureGridView({Key? key, this.routeName, this.dbReference})
-      : super(key: key);
+  const FutureGridView({
+    Key? key,
+    this.dbReference,
+    this.routeLink,
+    this.ratio,
+    this.radius,
+  }) : super(key: key);
   final String? dbReference;
-  final String? routeName;
+  final String? routeLink;
+  final double? ratio;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +25,9 @@ class FutureGridView extends StatelessWidget {
           }
           return GridView(
             padding: const EdgeInsets.all(4),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 767,
-              childAspectRatio: 7 / 2,
+              childAspectRatio: ratio!,
               crossAxisSpacing: 8,
             ),
             children: snapshot.data!.docs
@@ -30,10 +37,10 @@ class FutureGridView extends StatelessWidget {
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          routeName!,
+                          routeLink!,
                           arguments: {
                             'dbReference':
-                                dbReference! + '/' + e.id + routeName!,
+                                dbReference! + '/' + e.id + routeLink!,
                             'title': e['title']
                           },
                         );
@@ -42,13 +49,13 @@ class FutureGridView extends StatelessWidget {
                         elevation: 0.5,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(screenHeight * 0.1),
-                          bottomLeft: Radius.circular(screenHeight * 0.1),
+                          topLeft: Radius.circular(screenHeight * radius!),
+                          bottomLeft: Radius.circular(screenHeight * radius!),
                         )),
                         child: Row(children: [
-                          Image(
-                            image: NetworkImage(e['imageUrl']),
-                          ),
+                          // Image(
+                          //   image: NetworkImage(e['imageUrl']),
+                          // ),
                           const SizedBox(width: 4),
                           Text(
                             e['title'],

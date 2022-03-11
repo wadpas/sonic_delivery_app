@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../widgets/future_grid_view.dart';
+import '../screens/dish_screen.dart';
 
-class ItemsScreen extends StatelessWidget {
-  static const routeName = '/items';
-  const ItemsScreen({Key? key}) : super(key: key);
+class DishesScreen extends StatelessWidget {
+  static const routeName = '/dishes';
+  const DishesScreen({Key? key}) : super(key: key);
+  static const String routeLink = DishScreen.routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +16,10 @@ class ItemsScreen extends StatelessWidget {
         title: Text(routeData['title']),
       ),
       body: FutureGridView(
-        routeName: routeName,
+        routeLink: routeName,
         dbReference: routeData['dbReference'],
+        ratio: 6 / 2,
+        radius: 0.025,
       ),
     );
   }

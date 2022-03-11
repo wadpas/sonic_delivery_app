@@ -25,6 +25,8 @@ class FutureGridView extends StatelessWidget {
             ),
             children: snapshot.data!.docs
                 .map((e) => InkWell(
+                      splashColor: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(4),
                       onTap: () {
                         Navigator.pushNamed(
                           context,
@@ -36,8 +38,6 @@ class FutureGridView extends StatelessWidget {
                           },
                         );
                       },
-                      splashColor: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(4),
                       child: Card(
                         elevation: 0.5,
                         shape: RoundedRectangleBorder(
@@ -46,7 +46,6 @@ class FutureGridView extends StatelessWidget {
                           bottomLeft: Radius.circular(screenHeight * 0.1),
                         )),
                         child: Row(children: [
-                          const SizedBox(width: 4),
                           Image(
                             image: NetworkImage(e['imageUrl']),
                           ),

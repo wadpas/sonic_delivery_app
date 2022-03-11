@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../widgets/future_grid_view.dart';
 
 class ItemsScreen extends StatelessWidget {

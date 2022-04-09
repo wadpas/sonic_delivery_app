@@ -53,9 +53,9 @@ class FutureGridView extends StatelessWidget {
                           bottomLeft: Radius.circular(screenHeight * radius!),
                         )),
                         child: Row(children: [
-                          // Image(
-                          //   image: NetworkImage(e['imageUrl']),
-                          // ),
+                          Image(
+                            image: NetworkImage(e['imageUrl']),
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             e['title'],

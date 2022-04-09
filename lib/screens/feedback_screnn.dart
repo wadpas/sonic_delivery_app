@@ -9,38 +9,91 @@ class FeedbackScreen extends StatefulWidget {
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
-  int index = 0;
+  String questions = '/feedback/yIJRWtY6DSOdqRA9hf7T/questions';
+  String answers = '/feedback/xAJaFJftAOZozW0vVB3g/answers';
+  var questionIndex = 0;
+  var estimates = [];
+  var suggestion = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Feedback'),
       ),
-      body: FutureBuilder<DocumentSnapshot>(
+      body: FutureBuilder<QuerySnapshot>(
           future: FirebaseFirestore.instance
-              .doc('/feedback/GCLyb9s9HFbILocnkncx')
+              .collection(questions)
+              .orderBy('number')
               .get(),
-          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+          builder: (context, qSnapshot) {
+            if (qSnapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
-            Map<String, dynamic> questions =
-                snapshot.data!.data() as Map<String, dynamic>;
-            List<String> questionsNames = questions.keys.toList(growable: true);
-            print(questions['questions']);
-            // print(questions.keys.toList());
-
+            var questionList = qSnapshot.data!.docs;
+            if (questionIndex == questionList.length - 2) {
+              return Column(
+                children: [
+                  Text(questionList[questionIndex]['text']),
+                  const TextField(
+                    minLines: 2,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      label: Text('Text'),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(
+                        () => questionIndex += 1,
+                      );
+                    },
+                    child: const Text('Send'),
+                  )
+                ],
+              );
+            }
+            if (questionIndex == questionList.length - 1) {
+              return Column(
+                children: [
+                  Text(questionList[questionIndex]['text']),
+                ],
+              );
+            }
             return Column(children: [
-              index == 3
-                  ? Text('df')
-                  : TextButton(
-                      onPressed: () {
-                        setState(() {
-                          index += 1;
-                        });
-                        print(index);
-                      },
-                      child: Text('data'))
+              Text(questionList[questionIndex]['text']),
+              FutureBuilder<QuerySnapshot>(
+                future: FirebaseFirestore.instance
+                    .collection(answers)
+                    .orderBy('rating', descending: true)
+                    .get(),
+                builder: (ctx, aSnapshot) {
+                  if (aSnapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return Column(
+                    children: aSnapshot.data!.docs
+                        .map(
+                          (answer) => ElevatedButton(
+                              onPressed: () {
+                                estimates.add(answer['rating']);
+                                setState(
+                                  () => questionIndex += 1,
+                                );
+
+                                // FirebaseFirestore.instance
+                                //     .collection(questions)
+                                //     .doc(question.id)
+                                //     .update({
+                                //   'estimates': question['estimates'].add('1')
+                                // });
+                              },
+                              child: Text(answer['text'])),
+                        )
+                        .toList(),
+                  );
+                },
+              )
             ]);
           }),
     );

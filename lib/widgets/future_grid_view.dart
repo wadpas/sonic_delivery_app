@@ -4,21 +4,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FutureGridView extends StatelessWidget {
   const FutureGridView({
     Key? key,
-    this.dbReference,
-    this.routeLink,
+    this.collectionReference,
+    this.pushRoute,
     this.ratio,
-    this.radius,
   }) : super(key: key);
-  final String? dbReference;
-  final String? routeLink;
+  final String? collectionReference;
+  final String? pushRoute;
   final double? ratio;
-  final double? radius;
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return FutureBuilder<QuerySnapshot>(
-        future: FirebaseFirestore.instance.collection(dbReference!).get(),
+        future:
+            FirebaseFirestore.instance.collection(collectionReference!).get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -37,20 +36,16 @@ class FutureGridView extends StatelessWidget {
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          routeLink!,
-                          arguments: {
-                            'dbReference':
-                                dbReference! + '/' + e.id + routeLink!,
-                            'title': e['title']
-                          },
+                          pushRoute!,
+                          arguments: e,
                         );
                       },
                       child: Card(
                         elevation: 0.5,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(screenHeight * radius!),
-                          bottomLeft: Radius.circular(screenHeight * radius!),
+                          topLeft: Radius.circular(screenHeight),
+                          bottomLeft: Radius.circular(screenHeight),
                         )),
                         child: Row(children: [
                           Image(

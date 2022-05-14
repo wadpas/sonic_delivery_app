@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FutureGridView extends StatelessWidget {
-  const FutureGridView({
+class FutureGridBuilder extends StatelessWidget {
+  const FutureGridBuilder({
     Key? key,
     this.collectionReference,
     this.pushRoute,

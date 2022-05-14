@@ -21,80 +21,62 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       appBar: AppBar(
         title: const Text('Feedback'),
       ),
-      body: FutureBuilder<QuerySnapshot>(
-          future: FirebaseFirestore.instance
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
               .collection(questions)
               .orderBy('number')
-              .get(),
+              .snapshots(),
           builder: (context, qSnapshot) {
             if (qSnapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
             var questionList = qSnapshot.data!.docs;
-            if (questionIndex == questionList.length - 2) {
-              return Column(
-                children: [
-                  Text(questionList[questionIndex]['text']),
-                  const TextField(
-                    minLines: 2,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      label: Text('Text'),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(
-                        () => questionIndex += 1,
-                      );
-                    },
-                    child: const Text('Send'),
-                  )
-                ],
-              );
-            }
-            if (questionIndex == questionList.length - 1) {
-              return Column(
-                children: [
-                  Text(questionList[questionIndex]['text']),
-                ],
-              );
-            }
-            return Column(children: [
-              Text(questionList[questionIndex]['text']),
-              FutureBuilder<QuerySnapshot>(
-                future: FirebaseFirestore.instance
+            return StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
                     .collection(answers)
                     .orderBy('rating', descending: true)
-                    .get(),
-                builder: (ctx, aSnapshot) {
+                    .snapshots(),
+                builder: (context, aSnapshot) {
                   if (aSnapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   }
-                  return Column(
-                    children: aSnapshot.data!.docs
-                        .map(
-                          (answer) => ElevatedButton(
-                              onPressed: () {
-                                estimates.add(answer['rating']);
-                                setState(
-                                  () => questionIndex += 1,
-                                );
-
-                                // FirebaseFirestore.instance
-                                //     .collection(questions)
-                                //     .doc(question.id)
-                                //     .update({
-                                //   'estimates': question['estimates'].add('1')
-                                // });
-                              },
-                              child: Text(answer['text'])),
-                        )
-                        .toList(),
-                  );
-                },
-              )
-            ]);
+                  var answersList = aSnapshot.data!.docs;
+                  return Column(children: [
+                    Container(
+                        alignment: Alignment.topLeft,
+                        child: Text(questionList[questionIndex]['text'])),
+                    if (questionIndex < questionList.length - 1)
+                      Column(
+                        children: answersList
+                            .map(
+                              (answer) => ElevatedButton.icon(
+                                icon: Image.network(
+                                  answer['imageUrl'],
+                                  height: 26,
+                                ),
+                                label: Text(answer['text']),
+                                onPressed: () {
+                                  setState(() {
+                                    questionIndex += 1;
+                                  });
+                                },
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    if (questionIndex == questionList.length - 1)
+                      Column(children: [
+                        const TextField(
+                          minLines: 2,
+                          maxLines: 3,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: const Text('Send'),
+                        ),
+                      ]),
+                  ]);
+                });
           }),
     );
   }

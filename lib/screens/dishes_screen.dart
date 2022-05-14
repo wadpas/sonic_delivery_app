@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/future_grid_view.dart';
+import '../widgets/future_grid_builder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../screens/dish_screen.dart';
 
@@ -17,7 +17,7 @@ class DishesScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(e['title']),
       ),
-      body: FutureGridView(
+      body: FutureGridBuilder(
         collectionReference: e.reference.path + routeName,
         pushRoute: pushRoute,
         ratio: 6 / 2,

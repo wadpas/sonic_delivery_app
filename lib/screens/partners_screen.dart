@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/future_grid_view.dart';
+import '../widgets/future_grid_builder.dart';
 import '../screens/dishes_screen.dart';
 
 class PartnersScreen extends StatelessWidget {
@@ -13,7 +13,7 @@ class PartnersScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Partners'),
       ),
-      body: const FutureGridView(
+      body: const FutureGridBuilder(
         collectionReference: routeName,
         pushRoute: pushRoute,
         ratio: 7 / 2,

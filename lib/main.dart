@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'screens/partners_screen.dart';
 import 'screens/dishes_screen.dart';
 import 'screens/feedback_screnn.dart';
+import 'screens/expenses_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => const FeedbackScreen(),
+        '/': (context) => const ExpensesScreen(),
         DishesScreen.routeName: (context) => const DishesScreen()
       },
     );

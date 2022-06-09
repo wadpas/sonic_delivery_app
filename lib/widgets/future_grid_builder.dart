@@ -22,6 +22,12 @@ class FutureGridBuilder extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+          if (snapshot.hasError || !snapshot.hasData) {
+            return const Center(
+              child: Text('Oops.. Something went wrong.',
+                  style: TextStyle(fontSize: 18)),
+            );
+          }
           return GridView(
             padding: const EdgeInsets.all(4),
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

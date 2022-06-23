@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ExpensesScreen extends StatelessWidget {
   const ExpensesScreen({Key? key}) : super(key: key);
@@ -27,16 +28,60 @@ class ExpensesScreen extends StatelessWidget {
             return Column(children: [
               Container(
                 width: double.infinity,
+                padding: const EdgeInsets.all(8),
                 child: Card(
                   color: Theme.of(context).primaryColor,
-                  child: Text('Chart'),
+                  child: const Text('Chart'),
                 ),
               ),
-              ...snapshot.data!.docs
-                  .map((e) => Card(
-                        child: Text(e['title']),
-                      ))
-                  .toList()
+              ...snapshot.data!.docs.map((e) {
+                Timestamp date = e['date'];
+                return Card(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              e['title'],
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              DateFormat.yMMMd().format(date.toDate()),
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          child: Text(
+                            '\$${e['amount']}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.red,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }).toList()
             ]);
           },
         ));

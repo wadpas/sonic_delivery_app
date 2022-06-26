@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ExpensesScreen extends StatelessWidget {
-  const ExpensesScreen({Key? key}) : super(key: key);
+  ExpensesScreen({Key? key}) : super(key: key);
+
+  final titleContr = TextEditingController();
+  final dataContr = TextEditingController();
+  final priceContr = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +30,11 @@ class ExpensesScreen extends StatelessWidget {
               );
             }
             return Column(children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                child: Card(
-                  color: Theme.of(context).primaryColor,
-                  child: const Text('Chart'),
-                ),
-              ),
               ...snapshot.data!.docs.map((e) {
                 Timestamp date = e['date'];
                 return Card(
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(7),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -48,7 +44,7 @@ class ExpensesScreen extends StatelessWidget {
                             Text(
                               e['title'],
                               style: const TextStyle(
-                                fontSize: 18,
+                                fontSize: 19,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -62,7 +58,7 @@ class ExpensesScreen extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(7),
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Colors.grey,
@@ -72,7 +68,7 @@ class ExpensesScreen extends StatelessWidget {
                             '\$${e['amount']}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 19,
                               color: Colors.red,
                             ),
                           ),
@@ -81,7 +77,38 @@ class ExpensesScreen extends StatelessWidget {
                     ),
                   ),
                 );
-              }).toList()
+              }).toList(),
+              Expanded(child: Container()),
+              Card(
+                child: Column(
+                  children: [
+                    TextField(
+                      decoration: const InputDecoration(labelText: ' Dish'),
+                      controller: titleContr,
+                    ),
+                    TextField(
+                      decoration: const InputDecoration(labelText: ' Date'),
+                      controller: dataContr,
+                    ),
+                    TextField(
+                      decoration: const InputDecoration(labelText: ' Amount'),
+                      controller: priceContr,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        FirebaseFirestore.instance
+                            .collection('/users/Wq1OPs16hutxgwvObhFG/orders')
+                            .add({
+                          'title': titleContr.text,
+                          'date': DateTime.now(),
+                          'amount': double.parse(priceContr.text)
+                        });
+                      },
+                      child: const Text('Add'),
+                    )
+                  ],
+                ),
+              )
             ]);
           },
         ));

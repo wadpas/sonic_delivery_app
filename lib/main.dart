@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => const ExpensesScreen(),
+        '/': (context) => ExpensesScreen(),
         DishesScreen.routeName: (context) => const DishesScreen()
       },
     );

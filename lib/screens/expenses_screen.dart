@@ -9,28 +9,19 @@ class ExpensesScreen extends StatelessWidget {
   final dataContr = TextEditingController();
   final amountContr = TextEditingController();
 
-  void submitForm() {
-    final titleValue = titleContr.text;
-    final amountValue = double.parse(amountContr.text);
-
-    if (titleValue.isEmpty || amountValue <= 0) {
-      return;
-    }
-
-    FirebaseFirestore.instance
-        .collection('/users/Wq1OPs16hutxgwvObhFG/orders')
-        .add({
-      'title': titleValue,
-      'date': DateTime.now(),
-      'amount': amountValue
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Expenses'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSheet(context);
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
         ),
         body: FutureBuilder<QuerySnapshot>(
           future: FirebaseFirestore.instance
@@ -98,33 +89,57 @@ class ExpensesScreen extends StatelessWidget {
                     ),
                   );
                 });
-            // return Card(
-            //   child: Column(
-            //     children: [
-            //       TextField(
-            //         decoration: const InputDecoration(labelText: ' Dish'),
-            //         onSubmitted: (_) => submitForm(),
-            //         controller: titleContr,
-            //       ),
-            //       TextField(
-            //         decoration: const InputDecoration(labelText: ' Date'),
-            //         onSubmitted: (_) => submitForm(),
-            //         controller: dataContr,
-            //       ),
-            //       TextField(
-            //         decoration: const InputDecoration(labelText: ' Amount'),
-            //         keyboardType: TextInputType.number,
-            //         onSubmitted: (_) => submitForm(),
-            //         controller: amountContr,
-            //       ),
-            //       ElevatedButton(
-            //         onPressed: submitForm,
-            //         child: const Text('Add'),
-            //       )
-            //     ],
-            //   ),
-            // );
           },
         ));
+  }
+
+  void submitForm() {
+    final titleValue = titleContr.text;
+    final amountValue = double.parse(amountContr.text);
+
+    if (titleValue.isEmpty || amountValue <= 0) {
+      return;
+    }
+
+    FirebaseFirestore.instance
+        .collection('/users/Wq1OPs16hutxgwvObhFG/orders')
+        .add({
+      'title': titleValue,
+      'date': DateTime.now(),
+      'amount': amountValue
+    });
+  }
+
+  void showSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (ctx) {
+          return Card(
+            child: Column(
+              children: [
+                TextField(
+                  decoration: const InputDecoration(labelText: ' Dish'),
+                  onSubmitted: (_) => submitForm(),
+                  controller: titleContr,
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: ' Date'),
+                  onSubmitted: (_) => submitForm(),
+                  controller: dataContr,
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: ' Amount'),
+                  keyboardType: TextInputType.number,
+                  onSubmitted: (_) => submitForm(),
+                  controller: amountContr,
+                ),
+                ElevatedButton(
+                  onPressed: submitForm,
+                  child: const Text('Add'),
+                )
+              ],
+            ),
+          );
+        });
   }
 }

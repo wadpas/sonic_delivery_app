@@ -77,10 +77,10 @@ class ExpensesScreen extends StatelessWidget {
                             ),
                             child: Text(
                               amount.toStringAsFixed(2),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 19,
-                                color: Colors.red,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                           )
@@ -93,7 +93,7 @@ class ExpensesScreen extends StatelessWidget {
         ));
   }
 
-  void submitForm() {
+  void submitForm(context) {
     final titleValue = titleContr.text;
     final amountValue = double.parse(amountContr.text);
 
@@ -108,6 +108,7 @@ class ExpensesScreen extends StatelessWidget {
       'date': DateTime.now(),
       'amount': amountValue
     });
+    Navigator.of(context).pop();
   }
 
   void showSheet(BuildContext context) {
@@ -119,22 +120,22 @@ class ExpensesScreen extends StatelessWidget {
               children: [
                 TextField(
                   decoration: const InputDecoration(labelText: ' Dish'),
-                  onSubmitted: (_) => submitForm(),
+                  onSubmitted: (_) => submitForm(context),
                   controller: titleContr,
                 ),
                 TextField(
                   decoration: const InputDecoration(labelText: ' Date'),
-                  onSubmitted: (_) => submitForm(),
+                  onSubmitted: (_) => submitForm(context),
                   controller: dataContr,
                 ),
                 TextField(
                   decoration: const InputDecoration(labelText: ' Amount'),
                   keyboardType: TextInputType.number,
-                  onSubmitted: (_) => submitForm(),
+                  onSubmitted: (_) => submitForm(context),
                   controller: amountContr,
                 ),
                 ElevatedButton(
-                  onPressed: submitForm,
+                  onPressed: () => submitForm(context),
                   child: const Text('Add'),
                 )
               ],
